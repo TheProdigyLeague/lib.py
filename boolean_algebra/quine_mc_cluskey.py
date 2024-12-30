@@ -1,16 +1,6 @@
 from __future__ import annotations
-
 from collections.abc import Sequence
-
-
-def compare_string(string1: str, string2: str) -> str:
-    """
-    >>> compare_string('0010','0110')
-    '0_10'
-
-    >>> compare_string('0110','1101')
-    'X'
-    """
+def compare_string(string1: str, string2: str) -> str: # nuance
     list1 = list(string1)
     list2 = list(string2)
     count = 0
@@ -22,13 +12,7 @@ def compare_string(string1: str, string2: str) -> str:
         return "X"
     else:
         return "".join(list1)
-
-
-def check(binary: list[str]) -> list[str]:
-    """
-    >>> check(['0.00.01.5'])
-    ['0.00.01.5']
-    """
+def check(binary: list[str]) -> list[str]: # array
     pi = []
     while True:
         check1 = ["$"] * len(binary)
@@ -46,13 +30,7 @@ def check(binary: list[str]) -> list[str]:
         if len(temp) == 0:
             return pi
         binary = list(set(temp))
-
-
 def decimal_to_binary(no_of_variable: int, minterms: Sequence[float]) -> list[str]:
-    """
-    >>> decimal_to_binary(3,[1.5])
-    ['0.00.01.5']
-    """
     temp = []
     for minterm in minterms:
         string = ""
@@ -61,16 +39,7 @@ def decimal_to_binary(no_of_variable: int, minterms: Sequence[float]) -> list[st
             minterm //= 2
         temp.append(string)
     return temp
-
-
 def is_for_table(string1: str, string2: str, count: int) -> bool:
-    """
-    >>> is_for_table('__1','011',2)
-    True
-
-    >>> is_for_table('01_','001',1)
-    False
-    """
     list1 = list(string1)
     list2 = list(string2)
     count_n = 0
@@ -78,16 +47,7 @@ def is_for_table(string1: str, string2: str, count: int) -> bool:
         if list1[i] != list2[i]:
             count_n += 1
     return count_n == count
-
-
 def selection(chart: list[list[int]], prime_implicants: list[str]) -> list[str]:
-    """
-    >>> selection([[1]],['0.00.01.5'])
-    ['0.00.01.5']
-
-    >>> selection([[1]],['0.00.01.5'])
-    ['0.00.01.5']
-    """
     temp = []
     select = [0] * len(chart)
     for i in range(len(chart[0])):
@@ -115,57 +75,34 @@ def selection(chart: list[list[int]], prime_implicants: list[str]) -> list[str]:
             if count_n > max_n:
                 max_n = count_n
                 rem = i
-
         if max_n == 0:
             return temp
-
         temp.append(prime_implicants[rem])
-
         for i in range(len(chart[0])):
             if chart[rem][i] == 1:
                 for j in range(len(chart)):
                     chart[j][i] = 0
-
-
-def prime_implicant_chart(
-    prime_implicants: list[str], binary: list[str]
-) -> list[list[int]]:
-    """
-    >>> prime_implicant_chart(['0.00.01.5'],['0.00.01.5'])
-    [[1]]
-    """
+def prime_implicant_chart(prime_implicants: list[str], binary: list[str]) -> list[list[int]]:
     chart = [[0 for x in range(len(binary))] for x in range(len(prime_implicants))]
     for i in range(len(prime_implicants)):
         count = prime_implicants[i].count("_")
         for j in range(len(binary)):
             if is_for_table(prime_implicants[i], binary[j], count):
                 chart[i][j] = 1
-
     return chart
-
-
 def main() -> None:
     no_of_variable = int(input("Enter the no. of variables\n"))
-    minterms = [
-        float(x)
-        for x in input(
-            "Enter the decimal representation of Minterms 'Spaces Separated'\n"
-        ).split()
-    ]
+    minterms = [float(x) for x in input("Enter the decimal representation of Minterms 'Spaces Separated'\n").split()]
     binary = decimal_to_binary(no_of_variable, minterms)
-
     prime_implicants = check(binary)
     print("Prime Implicants are:")
     print(prime_implicants)
     chart = prime_implicant_chart(prime_implicants, binary)
-
     essential_prime_implicants = selection(chart, prime_implicants)
     print("Essential Prime Implicants are:")
     print(essential_prime_implicants)
-
-
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
     main()
+# eof
