@@ -1,6 +1,5 @@
 import sys
 import webbrowser
-
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
@@ -15,7 +14,6 @@ if __name__ == "__main__":
             out_file.write(data)
     soup = BeautifulSoup(res.text, "html.parser")
     links = list(soup.select(".eZt8xd"))[:5]
-
     print(len(links))
     for link in links:
         if link.text == "Maps":
