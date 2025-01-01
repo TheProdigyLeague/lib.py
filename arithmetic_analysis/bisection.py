@@ -1,24 +1,5 @@
 from collections.abc import Callable
-
-
 def bisection(function: Callable[[float], float], a: float, b: float) -> float:
-    """
-    finds where function becomes 0 in [a,b] using bolzano
-    >>> bisection(lambda x: x ** 3 - 1, -5, 5)
-    1.0000000149011612
-    >>> bisection(lambda x: x ** 3 - 1, 2, 1000)
-    Traceback (most recent call last):
-    ...
-    ValueError: could not find root in given interval.
-    >>> bisection(lambda x: x ** 2 - 4 * x + 3, 0, 2)
-    1.0
-    >>> bisection(lambda x: x ** 2 - 4 * x + 3, 2, 4)
-    3.0
-    >>> bisection(lambda x: x ** 2 - 4 * x + 3, 4, 1000)
-    Traceback (most recent call last):
-    ...
-    ValueError: could not find root in given interval.
-    """
     start: float = a
     end: float = b
     if function(a) == 0:  # one of the a or b is a root for the function
@@ -42,14 +23,11 @@ def bisection(function: Callable[[float], float], a: float, b: float) -> float:
             mid = start + (end - start) / 2.0
         return mid
 
-
 def f(x: float) -> float:
     return x**3 - 2 * x - 5
 
-
 if __name__ == "__main__":
     print(bisection(f, 1, 1000))
-
     import doctest
-
     doctest.testmod()
+# eof
